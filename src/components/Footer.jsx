@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer-section">
       {/* Large background text */}
       <h2 className="footer-bg-text">
-        visual poetry
+
       </h2>
 
       <div className="container">
@@ -17,7 +17,7 @@ const Footer = () => {
               Building robust CRM architectures, custom integrations, and elegant digital solutions.
             </p>
           </div>
-          
+
           <div>
             <h4 className="footer-heading">Explore</h4>
             <ul className="footer-links">
@@ -28,7 +28,7 @@ const Footer = () => {
               <li><a href="#contact" className="footer-link-item">Contact</a></li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="footer-heading">Connect</h4>
             <ul className="footer-links">

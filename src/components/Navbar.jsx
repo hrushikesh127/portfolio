@@ -24,11 +24,11 @@ const Navbar = () => {
       className="navbar"
     >
       <div className="navbar-logo">
-        Portfolio
+        <img src="/clear_logo.png" alt="Logo" style={{ height: '40px', borderRadius: '4px' }} />
       </div>
 
-      <div 
-        className={`navbar-toggle ${isOpen ? 'open' : ''}`} 
+      <div
+        className={`navbar-toggle ${isOpen ? 'open' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span></span>

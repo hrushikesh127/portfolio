@@ -13,7 +13,7 @@ const Hero = () => {
             transition={{ duration: 1, ease: 'easeOut' }}
             className="hero-title"
           >
-            Hrushikesh <br /> <span style={{ color: '#f5a623' }}>Dhore</span>
+            Hrushikesh <span style={{ color: '#f5a623' }}>Dhore</span>
           </motion.h1>
 
           <motion.p
@@ -26,8 +26,8 @@ const Hero = () => {
           </motion.p>
 
           <div className="hero-cta-group">
-            <motion.a 
-              href="/resume.pdf" 
+            <motion.a
+              href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, backgroundColor: '#000', color: '#fff' }}
@@ -62,18 +62,14 @@ const Hero = () => {
             <img
               src={heroImage}
               alt="Hrushikesh Dhore"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '20px' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', borderRadius: '50%' }}
             />
           </motion.div>
         </div>
       </div>
 
       {/* Social Icons floating */}
-      <div className="hero-socials">
-        {['IG', 'YT', 'TW', 'LI'].map((social) => (
-          <a key={social} href="#" className="hero-social-link">{social}</a>
-        ))}
-      </div>
+
     </section>
   );
 };

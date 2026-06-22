@@ -142,7 +142,7 @@ const Contact = () => {
                 >
                   {/* Name field */}
                   <div className="contact-form-group">
-                    <label htmlFor="contact-name" className="contact-label">name</label>
+                    <label htmlFor="contact-name" className="contact-label">Full Name</label>
                     <input
                       type="text"
                       id="contact-name"
@@ -161,7 +161,7 @@ const Contact = () => {
 
                   {/* Email field */}
                   <div className="contact-form-group">
-                    <label htmlFor="contact-email" className="contact-label">email</label>
+                    <label htmlFor="contact-email" className="contact-label">Email Address</label>
                     <input
                       type="email"
                       id="contact-email"
@@ -180,7 +180,7 @@ const Contact = () => {
 
                   {/* Message field */}
                   <div className="contact-form-group">
-                    <label htmlFor="contact-message" className="contact-label">message</label>
+                    <label htmlFor="contact-message" className="contact-label">Message</label>
                     <textarea
                       id="contact-message"
                       name="message"
@@ -198,7 +198,7 @@ const Contact = () => {
                     {errors.message && <span style={{ color: '#ff4d4f', fontSize: '12px', marginTop: '5px' }}>{errors.message}</span>}
                   </div>
 
-                   {/* Submit Button */}
+                  {/* Submit Button */}
                   <motion.button
                     type="submit"
                     disabled={isSending}
