@@ -15,6 +15,10 @@
   --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -60,114 +64,167 @@ button {
   padding: 0 40px;
 }
 
-/* Navbar styling */
+/* ─────────────────────────────────────────
+   NAVBAR — island glassmorphism
+───────────────────────────────────────── */
 .navbar {
   position: fixed;
-  top: 0;
+  top: 16px;
   left: 0;
   right: 0;
-  padding: 20px 40px;
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
+  margin: 0 auto;
+  width: max-content;
+  padding: 10px 14px 10px 22px;
   display: flex;
-  justify-content: center;
-  gap: 50px;
   align-items: center;
-  z-index: 100;
-  transition: var(--transition-smooth);
+  gap: 28px;
+  /* iPhone-style vibrancy glass */
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
+  -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
+  border-radius: 999px;
+  /* ultra-thin luminous border */
+  border: 0.5px solid rgba(255, 255, 255, 0.85);
+  /* inner top highlight + outer diffused glow */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.05);
+  z-index: 900;
 }
 
+/* Logo */
 .navbar-logo {
-  font-weight: 900;
-  font-size: 24px;
-  letter-spacing: -0.05em;
-  position: absolute;
-  left: 40px;
-}
-
-.navbar-menu {
   display: flex;
-  gap: 30px;
   align-items: center;
+  flex-shrink: 0;
+}
+.navbar-logo img {
+  height: 34px;
+  display: block;
 }
 
+/* Desktop link list */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 .navbar-link {
-  font-size: 14px;
+  display: block;
+  font-size: 13px;
   font-weight: 500;
   text-transform: lowercase;
-  opacity: 0.7;
-  transition: var(--transition-smooth);
+  letter-spacing: 0.01em;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: rgba(0,0,0,0.6);
+  transition: background 0.2s, color 0.2s;
 }
-
 .navbar-link:hover {
-  opacity: 1;
+  background: rgba(0,0,0,0.06);
+  color: #000;
 }
 
-/* Mobile hamburger button */
-.navbar-toggle {
+/* Hamburger — hidden on desktop */
+.navbar-burger {
   display: none;
   flex-direction: column;
   justify-content: space-between;
   width: 24px;
-  height: 18px;
+  height: 17px;
+  background: none;
+  border: none;
   cursor: pointer;
-  z-index: 101;
+  padding: 0;
+  flex-shrink: 0;
 }
-
-.navbar-toggle span {
+.navbar-burger span {
   display: block;
   height: 2px;
   width: 100%;
-  background-color: var(--primary-black);
+  background: #000;
   border-radius: 2px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.navbar-burger.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.navbar-burger.is-open span:nth-child(2) { opacity: 0; }
+.navbar-burger.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* ─────────────────────────────────────────
+   MOBILE FULL-SCREEN MENU OVERLAY
+   (rendered outside .navbar via AnimatePresence)
+───────────────────────────────────────── */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 850;
+  /* iPhone vibrancy glass overlay */
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
+  -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-menu-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.mobile-menu-link {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.02em;
+  padding: 12px 48px;
+  border-radius: 20px;
+  color: rgba(0,0,0,0.78);
+  transition: background 0.18s, color 0.18s;
+}
+.mobile-menu-link:hover,
+.mobile-menu-link:active {
+  background: rgba(0,0,0,0.07);
+  color: #000;
 }
 
-/* Transform toggle lines to X when active */
-.navbar-toggle.open span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.navbar-toggle.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.navbar-toggle.open span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
-/* Media Queries for Navbar */
+/* ─────────────────────────────────────────
+   MOBILE BREAKPOINT
+───────────────────────────────────────── */
 @media (max-width: 768px) {
   .navbar {
-    padding: 15px 20px;
+    top: 10px;
+    left: 16px;
+    right: 16px;
+    transform: none;
+    width: auto;
+    padding: 12px 20px;
     justify-content: space-between;
+    /* iPhone vibrancy glass — mobile bar */
+    background: rgba(255, 255, 255, 0.52);
+    backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
+    -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
+    border: 0.5px solid rgba(255, 255, 255, 0.85);
+    border-radius: 24px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      0 16px 40px rgba(0, 0, 0, 0.06);
   }
-  .navbar-logo {
-    position: relative;
-    left: auto;
-  }
-  .navbar-toggle {
-    display: flex;
-  }
-  .navbar-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100vh;
-    background-color: var(--primary-white);
-    flex-direction: column;
-    justify-content: center;
-    gap: 40px;
-    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 99;
-  }
-  .navbar-menu.open {
-    right: 0;
-  }
-  .navbar-link {
-    font-size: 24px;
-  }
+  .navbar-links { display: none; }
+  .navbar-burger { display: flex; }
+  .navbar-logo img { height: 28px; }
 }
 
 /* Section styling */
@@ -238,6 +295,7 @@ section {
   font-size: 120px;
   line-height: 0.9;
   margin-bottom: 30px;
+  text-transform: none;
 }
 
 .hero-desc {

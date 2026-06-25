@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import developerPortrait from '../assets/images/developer-portrait.png';
+import laptopImage from '../assets/images/laptop-about.png';
 
 const About = () => {
   return (
@@ -25,8 +25,8 @@ const About = () => {
           className="rounded-card about-image-card"
         >
           <img 
-            src={developerPortrait} 
-            alt="Developer Portrait" 
+            src={laptopImage} 
+            alt="Developer Workspace" 
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </motion.div>
