@@ -42,45 +42,47 @@ const Navbar = () => {
   return (
     <>
       {/* ── Island navbar bar ── */}
-      <motion.nav
-        className="navbar"
+      <motion.div
+        className="navbar-wrap"
         initial={{ opacity: 0, y: -24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Logo — scroll to top */}
-        <a
-          href="#"
-          className="navbar-logo"
-          onClick={(e) => handleNavClick(e, null)}
-        >
-          <img src="/clear_logo.png" alt="Logo" />
-        </a>
+        <nav className="navbar">
+          {/* Logo — scroll to top */}
+          <a
+            href="#"
+            className="navbar-logo"
+            onClick={(e) => handleNavClick(e, null)}
+          >
+            <img src="/clear_logo.png" alt="Logo" />
+          </a>
 
-        {/* Desktop links */}
-        <ul className="navbar-links">
-          {navLinks.map(link => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className="navbar-link"
-                onClick={(e) => handleNavClick(e, link.target)}
-              >
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
+          {/* Desktop links */}
+          <ul className="navbar-links">
+            {navLinks.map(link => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="navbar-link"
+                  onClick={(e) => handleNavClick(e, link.target)}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
 
-        {/* Hamburger — mobile only */}
-        <button
-          className={`navbar-burger ${menuOpen ? 'is-open' : ''}`}
-          onClick={() => setMenuOpen(o => !o)}
-          aria-label="Toggle menu"
-        >
-          <span /><span /><span />
-        </button>
-      </motion.nav>
+          {/* Hamburger — mobile only */}
+          <button
+            className={`navbar-burger ${menuOpen ? 'is-open' : ''}`}
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Toggle menu"
+          >
+            <span /><span /><span />
+          </button>
+        </nav>
+      </motion.div>
 
       {/* ── Full-screen mobile overlay ── */}
       <AnimatePresence>

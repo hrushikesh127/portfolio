@@ -67,33 +67,80 @@ button {
 /* ─────────────────────────────────────────
    NAVBAR — island glassmorphism
 ───────────────────────────────────────── */
-.navbar {
+
+/* Gradient border wrapper — sits behind .navbar */
+.navbar-wrap {
   position: fixed;
   top: 16px;
   left: 0;
   right: 0;
   margin: 0 auto;
   width: max-content;
+  z-index: 900;
+  border-radius: 999px;
+  /* Luminous gradient rim — catches the light at every edge */
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.90) 0%,
+    rgba(255,255,255,0.30) 40%,
+    rgba(180,180,200,0.25) 70%,
+    rgba(255,255,255,0.70) 100%
+  );
+  padding: 1px;                       /* thickness of the gradient border */
+  /* Outer ambient glow bleeding at the edges */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.18),
+    0 4px 12px rgba(0,0,0,0.06),
+    0 8px 32px rgba(0,0,0,0.10),
+    0 24px 56px rgba(0,0,0,0.07),
+    0 0 48px rgba(255,255,255,0.22);
+}
+
+.navbar {
+  position: relative;
+  width: 100%;
   padding: 10px 14px 10px 22px;
   display: flex;
   align-items: center;
   gap: 28px;
-  /* iPhone-style vibrancy glass */
-  background: rgba(255, 255, 255, 0.52);
-  backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
-  -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
+  /* Frosted glass fill */
+  background:
+    linear-gradient(
+      160deg,
+      rgba(255,255,255,0.68) 0%,
+      rgba(255,255,255,0.44) 60%,
+      rgba(245,245,255,0.50) 100%
+    );
+  backdrop-filter: blur(52px) saturate(210%) brightness(1.10);
+  -webkit-backdrop-filter: blur(52px) saturate(210%) brightness(1.10);
   border-radius: 999px;
-  /* ultra-thin luminous border */
-  border: 0.5px solid rgba(255, 255, 255, 0.85);
-  /* inner top highlight + outer diffused glow */
+  border: none;                       /* border is now on .navbar-wrap */
+  /* Inner edge highlights — top sheen + subtle bottom rim */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
-    0 2px 4px rgba(0, 0, 0, 0.04),
-    0 8px 24px rgba(0, 0, 0, 0.08),
-    0 24px 48px rgba(0, 0, 0, 0.05);
+    inset 0 1.5px 0 rgba(255,255,255,0.95),
+    inset 0 -1px 0   rgba(0,0,0,0.05),
+    inset 1px 0 0    rgba(255,255,255,0.60),
+    inset -1px 0 0   rgba(255,255,255,0.40);
   z-index: 900;
 }
+
+/* Glass sheen sweep across the top-left arc */
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    118deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.00) 55%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ensure children sit above the sheen */
+.navbar > * { position: relative; z-index: 2; }
 
 /* Logo */
 .navbar-logo {
@@ -202,25 +249,33 @@ button {
    MOBILE BREAKPOINT
 ───────────────────────────────────────── */
 @media (max-width: 768px) {
-  .navbar {
+  .navbar-wrap {
     top: 10px;
     left: 16px;
     right: 16px;
-    transform: none;
     width: auto;
+  }
+  .navbar {
+    transform: none;
+    width: 100%;
     padding: 12px 20px;
     justify-content: space-between;
-    /* iPhone vibrancy glass — mobile bar */
-    background: rgba(255, 255, 255, 0.52);
-    backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
-    -webkit-backdrop-filter: blur(48px) saturate(200%) brightness(1.08);
-    border: 0.5px solid rgba(255, 255, 255, 0.85);
-    border-radius: 24px;
+    border-radius: 20px;
+    /* Slightly richer glass on mobile */
+    background:
+      linear-gradient(
+        160deg,
+        rgba(255,255,255,0.72) 0%,
+        rgba(255,255,255,0.50) 100%
+      );
+    backdrop-filter: blur(56px) saturate(220%) brightness(1.12);
+    -webkit-backdrop-filter: blur(56px) saturate(220%) brightness(1.12);
+    border: none;
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.04),
-      0 4px 16px rgba(0, 0, 0, 0.08),
-      0 16px 40px rgba(0, 0, 0, 0.06);
+      inset 0 1.5px 0 rgba(255,255,255,0.95),
+      inset 0 -1px 0   rgba(0,0,0,0.05),
+      inset 1px 0 0    rgba(255,255,255,0.55),
+      inset -1px 0 0   rgba(255,255,255,0.35);
   }
   .navbar-links { display: none; }
   .navbar-burger { display: flex; }
