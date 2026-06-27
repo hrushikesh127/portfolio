@@ -11,12 +11,45 @@ const navLinks = [
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isDarkBg, setIsDarkBg] = useState(false);
 
   // Lock scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
+
+  // Handle scroll to set scrolled state and active section theme
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+
+      // 41px is approx vertical center of navbar (top: 16px + ~25px half-height)
+      const navbarY = 41;
+      let overDark = false;
+
+      const darkSections = document.querySelectorAll('.bg-dark, .footer-section');
+      for (const section of darkSections) {
+        const rect = section.getBoundingClientRect();
+        if (navbarY >= rect.top && navbarY <= rect.bottom) {
+          overDark = true;
+          break;
+        }
+      }
+      setIsDarkBg(overDark);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run initially and after a small delay to ensure DOM is fully ready
+    handleScroll();
+    const timer = setTimeout(handleScroll, 100);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -43,7 +76,7 @@ const Navbar = () => {
     <>
       {/* ── Island navbar bar ── */}
       <motion.div
-        className="navbar-wrap"
+        className={`navbar-wrap ${isScrolled ? 'is-scrolled' : ''} ${isDarkBg && !menuOpen ? 'is-dark-bg' : 'is-light-bg'}`}
         initial={{ opacity: 0, y: -24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

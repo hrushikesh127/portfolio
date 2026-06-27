@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const PortfolioGrid = () => {
   const skills = [
     { id: 1, title: 'Salesforce Admin', level: '70%', category: 'platform / admin', isDark: true },
-    { id: 2, title: 'Salesforce Devlopement', level: '30%', category: 'platform / development', isYellow: true },
+    { id: 2, title: 'Salesforce Devlopement', level: '60%', category: 'platform / development', isYellow: true },
     { id: 3, title: 'Apex Language', level: '50%', category: 'backend / logic', isDark: false },
     { id: 4, title: 'LWC Components', level: '80%', category: 'frontend / components', isDark: true }
   ];
@@ -40,7 +40,7 @@ const PortfolioGrid = () => {
               {skill.title}
             </div>
 
-            <div 
+            <div
               className="skill-level-text"
               style={{
                 color: skill.isYellow ? 'rgba(0, 0, 0, 0.77)' : (skill.isDark ? 'rgba(198, 193, 193, 0.7)' : 'rgba(36, 32, 25, 0.66)')
@@ -50,7 +50,7 @@ const PortfolioGrid = () => {
             </div>
 
             {/* Micro progress bar at bottom of card */}
-            <div 
+            <div
               className="skill-progress-track"
               style={{
                 backgroundColor: skill.isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'

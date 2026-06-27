@@ -64,36 +64,60 @@ button {
   padding: 0 40px;
 }
 
-/* ─────────────────────────────────────────
-   NAVBAR — island glassmorphism
-───────────────────────────────────────── */
-
 /* Gradient border wrapper — sits behind .navbar */
 .navbar-wrap {
   position: fixed;
-  top: 16px;
+  top: 24px;
   left: 0;
   right: 0;
   margin: 0 auto;
   width: max-content;
   z-index: 900;
   border-radius: 999px;
-  /* Luminous gradient rim — catches the light at every edge */
-  background: linear-gradient(
-    135deg,
-    rgba(255,255,255,0.90) 0%,
-    rgba(255,255,255,0.30) 40%,
-    rgba(180,180,200,0.25) 70%,
-    rgba(255,255,255,0.70) 100%
+  transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light background state (navbar is over a light section) */
+.navbar-wrap.is-light-bg {
+  --nav-bg: rgba(255, 255, 255, 0.42);
+  --nav-border: rgba(0, 0, 0, 0.08);
+  --nav-text: rgba(0, 0, 0, 0.65);
+  --nav-text-hover: #000000;
+  --nav-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05),
+                0 1px 1px 0 rgba(0, 0, 0, 0.02),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --nav-blur: 16px;
+  --nav-saturate: 190%;
+  --nav-brightness: 1.08;
+  --nav-sheen: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 55%
   );
-  padding: 1px;                       /* thickness of the gradient border */
-  /* Outer ambient glow bleeding at the edges */
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.18),
-    0 4px 12px rgba(0,0,0,0.06),
-    0 8px 32px rgba(0,0,0,0.10),
-    0 24px 56px rgba(0,0,0,0.07),
-    0 0 48px rgba(255,255,255,0.22);
+}
+
+/* Dark background state (navbar is over a dark section) */
+.navbar-wrap.is-dark-bg {
+  --nav-bg: rgba(10, 10, 12, 0.45);
+  --nav-border: rgba(255, 255, 255, 0.09);
+  --nav-text: rgba(255, 255, 255, 0.7);
+  --nav-text-hover: #ffffff;
+  --nav-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.4),
+                0 1px 1px 0 rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --nav-blur: 20px;
+  --nav-saturate: 150%;
+  --nav-brightness: 0.92;
+  --nav-sheen: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0) 55%
+  );
+}
+
+/* Compact layout when scrolled */
+.navbar-wrap.is-scrolled {
+  top: 16px;
 }
 
 .navbar {
@@ -103,24 +127,15 @@ button {
   display: flex;
   align-items: center;
   gap: 28px;
-  /* Frosted glass fill */
-  background:
-    linear-gradient(
-      160deg,
-      rgba(255,255,255,0.68) 0%,
-      rgba(255,255,255,0.44) 60%,
-      rgba(245,245,255,0.50) 100%
-    );
-  backdrop-filter: blur(52px) saturate(210%) brightness(1.10);
-  -webkit-backdrop-filter: blur(52px) saturate(210%) brightness(1.10);
+  background: var(--nav-bg);
+  border: 1px solid var(--nav-border);
+  backdrop-filter: blur(var(--nav-blur)) saturate(var(--nav-saturate)) brightness(var(--nav-brightness));
+  -webkit-backdrop-filter: blur(var(--nav-blur)) saturate(var(--nav-saturate)) brightness(var(--nav-brightness));
   border-radius: 999px;
-  border: none;                       /* border is now on .navbar-wrap */
-  /* Inner edge highlights — top sheen + subtle bottom rim */
-  box-shadow:
-    inset 0 1.5px 0 rgba(255,255,255,0.95),
-    inset 0 -1px 0   rgba(0,0,0,0.05),
-    inset 1px 0 0    rgba(255,255,255,0.60),
-    inset -1px 0 0   rgba(255,255,255,0.40);
+  box-shadow: var(--nav-shadow);
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 900;
 }
 
@@ -129,14 +144,11 @@ button {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 999px;
-  background: linear-gradient(
-    118deg,
-    rgba(255,255,255,0.55) 0%,
-    rgba(255,255,255,0.00) 55%
-  );
+  border-radius: inherit;
+  background: var(--nav-sheen);
   pointer-events: none;
   z-index: 1;
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Ensure children sit above the sheen */
@@ -147,6 +159,10 @@ button {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.navbar-logo:hover {
+  transform: scale(1.05);
 }
 .navbar-logo img {
   height: 34px;
@@ -170,12 +186,15 @@ button {
   letter-spacing: 0.01em;
   padding: 8px 16px;
   border-radius: 999px;
-  color: rgba(0,0,0,0.6);
-  transition: background 0.2s, color 0.2s;
+  color: var(--nav-text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 .navbar-link:hover {
-  background: rgba(0,0,0,0.06);
-  color: #000;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--nav-text-hover);
+}
+.navbar-wrap.is-dark-bg .navbar-link:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Hamburger — hidden on desktop */
@@ -195,9 +214,9 @@ button {
   display: block;
   height: 2px;
   width: 100%;
-  background: #000;
+  background: var(--nav-text-hover);
   border-radius: 2px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.4s ease;
 }
 .navbar-burger.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .navbar-burger.is-open span:nth-child(2) { opacity: 0; }
@@ -206,15 +225,15 @@ button {
 /* ─────────────────────────────────────────
    MOBILE FULL-SCREEN MENU OVERLAY
    (rendered outside .navbar via AnimatePresence)
-───────────────────────────────────────── */
+ ───────────────────────────────────────── */
 .mobile-menu {
   position: fixed;
   inset: 0;
   z-index: 850;
   /* iPhone vibrancy glass overlay */
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
-  -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.1);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(40px) saturate(200%) brightness(1.15);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -247,35 +266,28 @@ button {
 
 /* ─────────────────────────────────────────
    MOBILE BREAKPOINT
-───────────────────────────────────────── */
+ ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .navbar-wrap {
-    top: 10px;
+    top: 12px;
     left: 16px;
     right: 16px;
     width: auto;
   }
+  .navbar-wrap.is-scrolled {
+    top: 10px;
+  }
   .navbar {
     transform: none;
     width: 100%;
-    padding: 12px 20px;
+    padding: 10px 16px;
     justify-content: space-between;
     border-radius: 20px;
-    /* Slightly richer glass on mobile */
-    background:
-      linear-gradient(
-        160deg,
-        rgba(255,255,255,0.72) 0%,
-        rgba(255,255,255,0.50) 100%
-      );
-    backdrop-filter: blur(56px) saturate(220%) brightness(1.12);
-    -webkit-backdrop-filter: blur(56px) saturate(220%) brightness(1.12);
-    border: none;
-    box-shadow:
-      inset 0 1.5px 0 rgba(255,255,255,0.95),
-      inset 0 -1px 0   rgba(0,0,0,0.05),
-      inset 1px 0 0    rgba(255,255,255,0.55),
-      inset -1px 0 0   rgba(255,255,255,0.35);
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    backdrop-filter: blur(var(--nav-blur)) saturate(var(--nav-saturate)) brightness(var(--nav-brightness));
+    -webkit-backdrop-filter: blur(var(--nav-blur)) saturate(var(--nav-saturate)) brightness(var(--nav-brightness));
+    box-shadow: var(--nav-shadow);
   }
   .navbar-links { display: none; }
   .navbar-burger { display: flex; }
