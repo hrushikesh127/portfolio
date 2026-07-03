@@ -2,9 +2,44 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import heroImage from '../assets/images/user-hero.jpg';
 
+const SalesforceLogo = () => (
+  <svg
+    className="hero-sf-watermark"
+    viewBox="0 0 480 320"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="currentColor"
+      d="M196.8 48c-27.2 0-51.2 13.6-65.6 34.4C120 76.8 107.2 73.6 93.6 73.6 42.4 73.6 0 116 0 167.2s42.4 93.6 93.6 93.6c6.4 0 12.8-.8 18.4-2.4 12 24 36.8 40.8 65.6 40.8 28 0 52.8-16 64.8-39.2 8.8 4.8 19.2 7.2 30.4 7.2 23.2 0 43.2-12.8 54.4-32 5.6 1.6 11.2 2.4 17.6 2.4 47.2 0 85.6-38.4 85.6-85.6s-38.4-85.6-85.6-85.6c-12.8 0-24.8 2.4-36 7.2C296 56 264.8 32 228 32c-3.2 0-5.6 0-8 .8C211.2 41.6 204 44.8 196.8 48z"
+    />
+    <text
+      x="218"
+      y="178"
+      textAnchor="middle"
+      fill="#ffffff"
+      fontSize="42"
+      fontFamily="'Inter', sans-serif"
+      fontWeight="700"
+      letterSpacing="-1"
+    >
+      salesforce
+    </text>
+  </svg>
+);
+
 const Hero = () => {
   return (
     <section className="hero-section">
+      {/* Salesforce watermark background wrapper */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, ease: 'easeOut' }}
+        className="hero-sf-watermark-wrapper"
+      >
+        <SalesforceLogo />
+      </motion.div>
+
       <div className="container hero-grid">
         <div style={{ zIndex: 2 }}>
           <motion.h1
@@ -67,8 +102,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Social Icons floating */}
 
     </section>
   );
