@@ -5,7 +5,7 @@ const PortfolioGrid = () => {
   const skills = [
     { id: 1, title: 'Salesforce Admin', level: '70%', category: 'platform / admin', isDark: true },
     { id: 2, title: 'Salesforce Devlopement', level: '60%', category: 'platform / development', isYellow: true },
-    { id: 3, title: 'Apex Language', level: '50%', category: 'backend / logic', isDark: false },
+    { id: 3, title: 'Apex Language', level: '70%', category: 'backend / logic', isDark: false },
     { id: 4, title: 'LWC Components', level: '80%', category: 'frontend / components', isDark: true }
   ];
 
